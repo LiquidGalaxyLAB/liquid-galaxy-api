@@ -3,7 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-const config = require('config');
 
 const log = require('./helpers/log');
 const routes = require('./routes');
