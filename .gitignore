@@ -2,4 +2,8 @@ data
 node_modules
 coverage
 
+config/*
+!config/default.js
+!config/test.js
+
 npm-debug.log
