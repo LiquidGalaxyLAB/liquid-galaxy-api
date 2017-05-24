@@ -1,0 +1,100 @@
+{
+  "name": "express-api-starter-kit",
+  "description": "Express API starter kit",
+  "author": {
+    "name": "Gerard Rovira Sánchez",
+    "email": "zurfyx@gmail.com",
+    "url": "zurfyx.com"
+  },
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "npm run start-prod",
+    "start-prod": "better-npm-run start-prod",
+    "start-dev": "better-npm-run start-dev",
+    "lint": "eslint .",
+    "test": "npm run lint && better-npm-run test-cli",
+    "test-cli": "better-npm-run test-cli",
+    "coverage": "better-npm-run coverage"
+  },
+  "betterScripts": {
+    "start-prod": {
+      "command": "node src/server.js",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 3030,
+        "DEBUG": "*info,*error"
+      }
+    },
+    "start-dev": {
+      "command": "nodemon src/server.js",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": 3030,
+        "DEBUG": "*info,*dev,*error",
+        "DEBUG_COLORS": true
+      }
+    },
+    "test-cli": {
+      "command": "mocha ./src/__tests__/helper.js \"./src/**/*.test.js\" --timeout 120000",
+      "env": {
+        "NODE_ENV": "test",
+        "PORT": 3030,
+        "DEBUG": "*info,*dev,*error"
+      }
+    },
+    "coverage": {
+      "command": "istanbul --include-all-sources cover _mocha -- ./src/__tests__/helper.js \"./src/**/*.test.js\" --timeout 120000",
+      "env": {
+        "NODE_ENV": "test",
+        "PORT": 3030,
+        "DEBUG": "*error"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zurfyx/express-api-starter-kit.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "api",
+    "starter",
+    "kit",
+    "json"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zurfyx/express-api-starter-kit/issues"
+  },
+  "homepage": "https://github.com/zurfyx/express-api-starter-kit#readme",
+  "dependencies": {
+    "better-npm-run": "0.0.14",
+    "body-parser": "^1.16.1",
+    "config": "^1.25.1",
+    "connect-redis": "^3.2.0",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.6.1",
+    "express": "^4.14.1",
+    "http": "0.0.0",
+    "mongoose": "^4.8.4",
+    "morgan": "^1.8.1",
+    "validator": "^7.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.16.1",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0",
+    "fetch-absolute": "^1.0.0",
+    "istanbul": "^1.1.0-alpha.1",
+    "mocha": "^3.2.0",
+    "mockery": "^2.0.0",
+    "node-fetch": "^1.6.3",
+    "nodemon": "^1.11.0",
+    "sinon": "^2.0.0"
+  }
+}
