@@ -7,6 +7,7 @@ const controllers = require('../controllers');
 const router = express.Router();
 const {
   hello,
+  kml,
 } = controllers;
 
 /**
@@ -35,7 +36,7 @@ router.get('/', c(hello.hello));
 /**
  * KMLs.
  */
-// router.post('/signin', c(auth.signin, (req, res, next) => [req, res, next]));
+router.post('/queries', c(kml.createKml, req => [req.body]));
 
 /**
  * Error-handler.

@@ -71,6 +71,7 @@
   "homepage": "https://github.com/zurfyx/express-api-starter-kit#readme",
   "dependencies": {
     "better-npm-run": "0.0.14",
+    "bluebird": "^3.5.0",
     "body-parser": "^1.16.1",
     "config": "^1.25.1",
     "connect-redis": "^3.2.0",
@@ -80,6 +81,7 @@
     "http": "0.0.0",
     "mongoose": "^4.8.4",
     "morgan": "^1.8.1",
+    "uuid": "^3.0.1",
     "validator": "^7.0.0"
   },
   "devDependencies": {
