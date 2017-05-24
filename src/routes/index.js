@@ -36,7 +36,7 @@ router.get('/', c(hello.hello));
 /**
  * KMLs.
  */
-router.post('/queries', c(kml.createKml, req => [req.body]));
+router.post('/kmls', c(kml.createKml, req => [req.body]));
 
 /**
  * Error-handler.
