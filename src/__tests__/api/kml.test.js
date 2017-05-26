@@ -5,22 +5,23 @@ const fs = require('fs');
 
 const kmlPath = config.get('kmlPath');
 const tmpKmlPath = config.get('tmpKmlPath');
+const queriesPath = config.get('queriesPath');
 
 describe('KML', () => {
+  let stubWriteFile;
+
+  beforeEach(() => {
+    stubWriteFile = [];
+    sinon.stub(fs, 'writeFile').callsFake((filename, contents) => {
+      stubWriteFile.push({ filename, contents });
+    });
+  });
+
+  afterEach(() => {
+    fs.writeFile.restore();
+  });
+
   describe('POST /kmls', () => {
-    let stubWriteFile;
-
-    beforeEach(() => {
-      stubWriteFile = [];
-      sinon.stub(fs, 'writeFile').callsFake((filename, contents) => {
-        stubWriteFile.push({ filename, contents });
-      });
-    });
-
-    afterEach(() => {
-      fs.writeFile.restore();
-    });
-
     it('should save the kml into the system when contents is given', async () => {
       const CONTENTS = '<?xml ...';
 
@@ -53,6 +54,31 @@ describe('KML', () => {
       const result = await fetchApi('/kmls', { headers, method: 'POST' });
 
       expect(result.status).to.equal(400);
+    });
+  });
+
+  describe('POST /queries', () => {
+    it('should save the new queries', async () => {
+      const QUERY = 'flyto=...';
+
+      const body = JSON.stringify({ contents: QUERY });
+      const result = await fetchApi('/queries', { headers, body, method: 'POST' });
+
+      expect(result.status).to.equal(200);
+
+      expect(stubWriteFile.length).to.equal(1);
+      expect(stubWriteFile[0].filename).to.equal(queriesPath);
+      expect(stubWriteFile[0].contents).to.equal(QUERY);
+    });
+
+    it('should empty the query.txt when no new queries are provided', async () => {
+      const result = await fetchApi('/queries', { headers, method: 'POST' });
+
+      expect(result.status).to.equal(200);
+
+      expect(stubWriteFile.length).to.equal(1);
+      expect(stubWriteFile[0].filename).to.equal(queriesPath);
+      expect(stubWriteFile[0].contents).to.equal('');
     });
   });
 });

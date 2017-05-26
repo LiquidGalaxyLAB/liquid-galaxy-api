@@ -7,7 +7,7 @@ Promise.promisifyAll(fs);
 
 const kmlPath = config.get('kmlPath');
 const tmpKmlPath = config.get('tmpKmlPath');
-// const queriesPath = config.get('queriesPath');
+const queriesPath = config.get('queriesPath');
 
 /**
  * Saves KML file on disk and sets the kmls.txt to point at it.
@@ -26,12 +26,12 @@ async function saveKmlUriOnDisk(uri) {
   return fs.writeFile(kmlPath, `${uri}?${uuid()}`);
 }
 
-// function saveQueryOnDisk() {
-
-// }
+function saveQueryOnDisk(contents) {
+  return fs.writeFile(queriesPath, contents);
+}
 
 module.exports = {
   saveKmlOnDisk,
   saveKmlUriOnDisk,
-  // saveQueryOnDisk,
+  saveQueryOnDisk,
 };
