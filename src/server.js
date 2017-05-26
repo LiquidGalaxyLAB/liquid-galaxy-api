@@ -32,4 +32,7 @@ log.info('-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-');
 log.info(`🌐  API listening on port ${PORT}`);
 log.info('-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-');
 
-module.exports = server;
+module.exports = {
+  server,
+  app,
+};

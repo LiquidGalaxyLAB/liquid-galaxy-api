@@ -1,6 +1,8 @@
 const fetch = require('node-fetch');
 const fetchAbsolute = require('fetch-absolute');
 
+require('../server');
+
 const PORT = process.env.PORT || 3030;
 
 // Globals.

@@ -40,7 +40,7 @@
       "env": {
         "NODE_ENV": "test",
         "PORT": 3030,
-        "DEBUG": "*info,*dev,*error"
+        "DEBUG": "*dev,*error"
       }
     },
     "coverage": {
@@ -94,9 +94,10 @@
     "fetch-absolute": "^1.0.0",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.2.0",
+    "mock-fs": "^4.3.0",
     "mockery": "^2.0.0",
     "node-fetch": "^1.6.3",
     "nodemon": "^1.11.0",
-    "sinon": "^2.0.0"
+    "sinon": "^2.3.1"
   }
 }

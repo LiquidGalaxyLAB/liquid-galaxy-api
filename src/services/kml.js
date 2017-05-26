@@ -3,7 +3,7 @@ const config = require('config');
 const fs = require('fs');
 const uuid = require('uuid/v4');
 
-const writeFile = Promise.promisify(fs.writeFile);
+Promise.promisifyAll(fs);
 
 const kmlPath = config.get('kmlPath');
 const tmpKmlPath = config.get('tmpKmlPath');
@@ -14,8 +14,8 @@ const tmpKmlPath = config.get('tmpKmlPath');
  * @param data KML contents.
  */
 async function saveKmlOnDisk(contents) {
-  await writeFile(tmpKmlPath, contents);
-  return writeFile(kmlPath, `file://${tmpKmlPath}?${uuid()}`);
+  await fs.writeFile(tmpKmlPath, contents);
+  return fs.writeFile(kmlPath, `file://${tmpKmlPath}?${uuid()}`);
 }
 
 /**
@@ -23,7 +23,7 @@ async function saveKmlOnDisk(contents) {
  * @param uri any uri (i.e. http://192.168.1.10/kmls.txt).
  */
 async function saveKmlUriOnDisk(uri) {
-  return writeFile(kmlPath, `${uri}?${uuid()}`);
+  return fs.writeFile(kmlPath, `${uri}?${uuid()}`);
 }
 
 // function saveQueryOnDisk() {
