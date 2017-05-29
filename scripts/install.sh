@@ -1,6 +1,8 @@
 #!/bin/bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+TARGET_DIR="$HOME/api"
+
+git clone https://github.com/LiquidGalaxyLab/liquid-galaxy-api $TARGET_DIR
 
 apache2=$(which apache2)
 if [ "$apache2" = "" ]; then
@@ -40,7 +42,7 @@ curl -sL https://deb.nodesource.com/setup_7.x | sudo bash -
 sudo apt-get install -qq nodejs
 sudo npm install pm2 -g
 (
-  cd "$DIR/.."
+  cd "$TARGET_DIR"
   npm install
   pm2 start npm -- start
 )
