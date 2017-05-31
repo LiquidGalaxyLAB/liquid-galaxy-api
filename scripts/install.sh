@@ -38,7 +38,7 @@ sudo /etc/init.d/apache2 reload
 sudo iptables -I INPUT 1 -p tcp --dport 82 -j ACCEPT
 sudo iptables-save | sudo tee /etc/iptables.conf > /dev/null
 
-curl -sL https://deb.nodesource.com/setup_7.x | sudo bash -
+curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
 sudo apt-get install -qq nodejs
 sudo npm install pm2 -g
 (
