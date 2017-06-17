@@ -9,4 +9,14 @@ module.exports = {
 
   // File that handles Liquid Galaxy commands (such as flyto).
   queriesPath: '/tmp/query.txt',
+
+  // Firebase repository where all up reports will be sent.
+  firebase: {
+    apiKey: 'AIzaSyC247KPgAqzFMOgjddZcYZdlUXNkFSTJQE',
+    authDomain: 'liquid-galaxy-api-dev.firebaseapp.com',
+    databaseURL: 'https://liquid-galaxy-api-dev.firebaseio.com',
+    projectId: 'liquid-galaxy-api-dev',
+    storageBucket: 'liquid-galaxy-api-dev.appspot.com',
+    messagingSenderId: '152920735673',
+  },
 };

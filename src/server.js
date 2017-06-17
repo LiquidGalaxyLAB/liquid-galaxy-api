@@ -6,6 +6,8 @@ const morgan = require('morgan');
 
 const log = require('./helpers/log');
 const routes = require('./routes');
+const firebase = require('./firebase');
+const cron = require('./cron');
 
 const PORT = process.env.PORT || 3030;
 
@@ -13,6 +15,12 @@ const app = express();
 const server = http.createServer(app);
 
 // Hey you! care about my order http://stackoverflow.com/a/16781554/2034015
+
+// Databases.
+firebase.initialize();
+
+// Cron jobs.
+cron.startAll();
 
 // Cookies.
 app.use(cookieParser());
