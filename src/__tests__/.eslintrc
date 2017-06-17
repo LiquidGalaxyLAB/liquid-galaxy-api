@@ -4,6 +4,7 @@
   },
   "globals": {
     "fetchApi": true,
-    "headers": true
+    "headers": true,
+    "socketio": true
   }
 }

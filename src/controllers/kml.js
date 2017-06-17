@@ -5,7 +5,7 @@ const {
   saveQueryOnDisk,
 } = require('../services').kml;
 
-async function createKml(values) {
+function createKml(values) {
   const { contents, uri } = values;
   if (Number(!!contents) + Number(!!uri) !== 1) {
     throw new ServerError('Either Contents or Uri must be defined.', 400);
@@ -16,7 +16,7 @@ async function createKml(values) {
 
 function createQuery(values) {
   const contents = values.contents || '';
-  saveQueryOnDisk(contents);
+  return saveQueryOnDisk(contents);
 }
 
 module.exports = {

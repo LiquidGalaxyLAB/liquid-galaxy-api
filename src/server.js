@@ -3,11 +3,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const Socketio = require('socket.io');
+const config = require('config');
 
 const log = require('./helpers/log');
 const routes = require('./routes');
 const firebase = require('./firebase');
 const cron = require('./cron');
+const socketConnectionHandler = require('./sockets');
 
 const PORT = process.env.PORT || 3030;
 
@@ -20,7 +23,9 @@ const server = http.createServer(app);
 firebase.initialize();
 
 // Cron jobs.
-cron.startAll();
+if (config.get('cronJobsEnabled')) {
+  cron.startAll();
+}
 
 // Cookies.
 app.use(cookieParser());
@@ -34,6 +39,10 @@ app.use(morgan('combined', { stream: { write: msg => log.info(msg) } }));
 
 // URLs.
 app.use('/', routes);
+
+// Socket.io
+const io = Socketio(server);
+io.on('connection', socketConnectionHandler);
 
 server.listen(PORT);
 log.info('-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-');

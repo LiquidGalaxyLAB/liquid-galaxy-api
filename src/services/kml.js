@@ -22,7 +22,7 @@ async function saveKmlOnDisk(contents) {
  * Overrides kmls.txt to point to the indicated URI.
  * @param uri any uri (i.e. http://192.168.1.10/kmls.txt).
  */
-async function saveKmlUriOnDisk(uri) {
+function saveKmlUriOnDisk(uri) {
   return fs.writeFile(kmlPath, `${uri}?${uuid()}`);
 }
 
