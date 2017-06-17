@@ -15,11 +15,11 @@ module.exports = {
 
   // Firebase repository where all alive reports will be sent.
   firebase: {
-    apiKey: 'AIzaSyC247KPgAqzFMOgjddZcYZdlUXNkFSTJQE',
-    authDomain: 'liquid-galaxy-api-dev.firebaseapp.com',
-    databaseURL: 'https://liquid-galaxy-api-dev.firebaseio.com',
-    projectId: 'liquid-galaxy-api-dev',
-    storageBucket: 'liquid-galaxy-api-dev.appspot.com',
-    messagingSenderId: '152920735673',
+    apiKey: 'AIzaSyAddzwazFGRJiC-GW35Zgr7XdhUk8x0890',
+    authDomain: 'liquid-galaxy-api.firebaseapp.com',
+    databaseURL: 'https://liquid-galaxy-api.firebaseio.com',
+    projectId: 'liquid-galaxy-api',
+    storageBucket: 'liquid-galaxy-api.appspot.com',
+    messagingSenderId: '822593561436',
   },
 };
