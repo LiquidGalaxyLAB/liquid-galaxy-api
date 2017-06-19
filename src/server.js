@@ -12,7 +12,7 @@ const firebase = require('./firebase');
 const cron = require('./cron');
 const socketConnectionHandler = require('./sockets');
 
-const PORT = process.env.PORT || 3030;
+const PORT = config.get('port');
 
 const app = express();
 const server = http.createServer(app);

@@ -28,7 +28,7 @@ describe('[Service] Up', () => {
     const firebaseRef = firebaseMockSdk.database().ref('up');
     firebaseRef.flush();
     const expected = {
-      '80%80%80%80': {
+      '80%80%80%80%888': {
         [newEntryRef.key]: {
           localIp: '192.168.1.42',
           timestamp: 1,
