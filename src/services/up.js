@@ -8,10 +8,11 @@ async function reportAlive() {
   const accessPort = config.get('proxy') ? config.get('proxyPort') : config.get('port');
   const currPublicIp = await publicIp.v4();
   const currPublicIpConverted = currPublicIp.replace(/\./g, '%');
-  const ups = firebase.database().ref(`up/${currPublicIpConverted}%${accessPort}`);
+  const ups = firebase.database().ref(`up/${currPublicIpConverted}`);
   return ups.push({
     localIp: currLocalIp,
     timestamp: firebase.database.ServerValue.TIMESTAMP,
+    port: accessPort,
   });
 }
 
