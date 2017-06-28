@@ -1,8 +1,9 @@
 #!/bin/bash
 
-TARGET_DIR="$HOME/api"
+# API installation / upgrade script for Liquid Galaxy.
 
-git clone https://github.com/LiquidGalaxyLab/liquid-galaxy-api $TARGET_DIR
+TARGET_DIR="$HOME/api"
+SOURCE_CODE="https://github.com/LiquidGalaxyLab/liquid-galaxy-api"
 
 apache2=$(which apache2)
 if [ "$apache2" = "" ]; then
@@ -19,9 +20,9 @@ sudo a2enmod proxy proxy_http rewrite
 sudo tee "/etc/apache2/sites-available/api.conf" > /dev/null << EOM
 <VirtualHost *:82>
 	RewriteEngine On
-  RewriteCond %{REQUEST_URI}  ^/socket.io            [NC]
-  RewriteCond %{QUERY_STRING} transport=websocket    [NC]
-  RewriteRule /(.*)           ws://localhost:3001/$1 [P,L]
+	RewriteCond %{REQUEST_URI}  ^/socket.io            [NC]
+	RewriteCond %{QUERY_STRING} transport=websocket    [NC]
+	RewriteRule /(.*)           ws://localhost:3001/$1 [P,L]
 
 	ProxyRequests off
 
@@ -46,10 +47,17 @@ sudo iptables-save | sudo tee /etc/iptables.conf > /dev/null
 curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
 sudo apt-get install -qq nodejs
 sudo npm install pm2 -g
+
+if [ -d "$TARGET_DIR" ]; then
+	sudo pm2 delete api
+else
+	git clone $SOURCE_CODE $TARGET_DIR # New installation -> clone source code repository.
+fi
 (
   cd "$TARGET_DIR"
+	git pull
   npm install
-  pm2 start npm -- start
+  sudo pm2 --name api start npm -- start
 )
 sudo pm2 startup
 

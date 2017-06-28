@@ -10,14 +10,10 @@
 
 ## Liquid Galaxy quickstart
 
+Install / upgrade:
+
 ```
 bash ./scripts/install.sh
-```
-
-Upgrade (*Coming soon*)
-
-```
-bash ./scripts/upgrade.sh
 ```
 
 The API will be available under port **82** (proxy served by Apache). http://localhost:82 
