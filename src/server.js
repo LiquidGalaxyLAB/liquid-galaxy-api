@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const Socketio = require('socket.io');
 const config = require('config');
+const cors = require('cors');
 
 const log = require('./helpers/log');
 const routes = require('./routes');
@@ -38,10 +39,12 @@ app.use(bodyParser.json());
 app.use(morgan('combined', { stream: { write: msg => log.info(msg) } }));
 
 // URLs.
+app.use(cors());
 app.use('/', routes);
 
 // Socket.io
 const io = Socketio(server);
+io.set('origins', '*:*');
 io.on('connection', socketConnectionHandler);
 
 server.listen(PORT);
