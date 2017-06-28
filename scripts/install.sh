@@ -15,9 +15,14 @@ echo "NameVirtualHost *:82" | sudo tee -a /etc/apache2/ports.conf > /dev/null
 echo "Listen 82" | sudo tee -a /etc/apache2/ports.conf > /dev/null
 
 # API Apache configuration.
-sudo a2enmod proxy proxy_http
+sudo a2enmod proxy proxy_http rewrite
 sudo tee "/etc/apache2/sites-available/api.conf" > /dev/null << EOM
 <VirtualHost *:82>
+	RewriteEngine On
+  RewriteCond %{REQUEST_URI}  ^/socket.io            [NC]
+  RewriteCond %{QUERY_STRING} transport=websocket    [NC]
+  RewriteRule /(.*)           ws://localhost:3001/$1 [P,L]
+
 	ProxyRequests off
 
 	<Proxy *>
