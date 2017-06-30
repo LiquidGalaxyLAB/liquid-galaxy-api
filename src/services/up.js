@@ -1,10 +1,11 @@
 const config = require('config');
 const firebase = require('firebase');
-const localIp = require('ip');
 const publicIp = require('public-ip');
 
+const { localIp } = require('../helpers/ip');
+
 async function reportAlive() {
-  const currLocalIp = localIp.address();
+  const currLocalIp = localIp();
   const accessPort = config.get('proxy') ? config.get('proxyPort') : config.get('port');
   const currPublicIp = await publicIp.v4();
   const currPublicIpConverted = currPublicIp.replace(/\./g, '%');

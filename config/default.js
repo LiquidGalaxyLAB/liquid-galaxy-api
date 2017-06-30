@@ -8,6 +8,10 @@ module.exports = {
   proxy: true,
   proxyPort: 82,
 
+  // Network interface. Optional but highly recommended: Liquid Galaxy setup might confuse your
+  // network device with the one it uses for its internal network.
+  networkInterface: 'eth0', // Leave blank to autodetect.
+
   // TXT file that acts as a KML router. This file's responsibility is to solely store the remote
   // path that's containing the final KML.
   kmlPath: '/var/www/html/kmls.txt',
