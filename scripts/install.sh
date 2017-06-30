@@ -58,6 +58,7 @@ fi
 	git pull
   npm install
   sudo pm2 --name api start npm -- start
+	sudo pm2 save
 )
 sudo pm2 startup
 
