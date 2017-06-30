@@ -10,7 +10,7 @@
 
 ## Liquid Galaxy quickstart
 
-Install / upgrade:
+Install / upgrade **(on the master machine only)**:
 
 ```
 bash ./scripts/install.sh
@@ -23,6 +23,10 @@ No further steps are required.
 *Reminder: [php-interface](https://github.com/LiquidGalaxyLAB/liquid-galaxy/tree/master/php-interface) is by default running on port 81 (also served by Apache).*
 
 ## Manual installation
+
+**Install on the master machine only!**
+
+Requirements:
 
 - [Node 8+](https://nodejs.org/en/download/package-manager/)
 
