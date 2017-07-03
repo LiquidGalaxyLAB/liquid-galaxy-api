@@ -20,13 +20,8 @@ const server = http.createServer(app);
 
 // Hey you! care about my order http://stackoverflow.com/a/16781554/2034015
 
-// Databases.
+// Firebase stuff.
 firebase.initialize();
-
-// Cron jobs.
-if (config.get('cronJobsEnabled')) {
-  cron.startAll();
-}
 
 // Cookies.
 app.use(cookieParser());

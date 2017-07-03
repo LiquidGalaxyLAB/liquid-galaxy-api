@@ -23,9 +23,6 @@ module.exports = {
   // File that handles Liquid Galaxy commands (such as flyto).
   queriesPath: '/tmp/query.txt',
 
-  // Run Cron jobs (such as alive reports).
-  cronJobsEnabled: true,
-
   // Firebase repository where all alive reports will be sent.
   firebase: {
     apiKey: 'AIzaSyAddzwazFGRJiC-GW35Zgr7XdhUk8x0890',
