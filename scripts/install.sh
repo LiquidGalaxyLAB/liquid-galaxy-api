@@ -16,13 +16,20 @@ echo "NameVirtualHost *:82" | sudo tee -a /etc/apache2/ports.conf > /dev/null
 echo "Listen 82" | sudo tee -a /etc/apache2/ports.conf > /dev/null
 
 # API Apache configuration.
-sudo a2enmod proxy proxy_http rewrite
+sudo a2enmod proxy proxy_http rewrite ssl
+sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
 sudo tee "/etc/apache2/sites-available/api.conf" > /dev/null << EOM
 <VirtualHost *:82>
 	RewriteEngine On
 	RewriteCond %{REQUEST_URI}  ^/socket.io            [NC]
 	RewriteCond %{QUERY_STRING} transport=websocket    [NC]
 	RewriteRule /(.*)           ws://localhost:3001/$1 [P,L]
+
+	SSLEngine on
+  SSLProtocol all -SSLv2
+  SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5
+  SSLCertificateFile "/etc/ssl/certs/server.crt"
+  SSLCertificateKeyFile "/etc/ssl/private/server.key"
 
 	ProxyRequests off
 
