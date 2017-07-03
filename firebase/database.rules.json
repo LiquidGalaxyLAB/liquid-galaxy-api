@@ -42,6 +42,9 @@
           ".validate": "newData.val() === now"
         }
       }
+    },
+    "$other": {
+      ".validate": false
     }
   }
 }
