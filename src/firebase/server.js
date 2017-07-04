@@ -1,12 +1,14 @@
 const firebase = require('firebase');
-const CronTask = require('../cron/CronTask');
+
+const { encodeUid } = require('./utils');
 
 const SERVER_TIME = firebase.database.ServerValue.TIMESTAMP;
 
-function reportAlive(uid) {
-  console.info(firebase.auth().currentUser);
-  console.info(`/servers/${uid}/lastOnline`);
-  firebase.database().ref(`/servers/${uid}/lastOnline`).set(SERVER_TIME);
+async function reportAlive(uid) {
+  const encodedUid = encodeUid(uid);
+  await firebase.database().ref(`/servers/${encodedUid}/lastOnline`).set(SERVER_TIME);
+  await firebase.database().ref(`/servers/${encodedUid}/isOnline`).set(true);
+  firebase.database().ref(`/servers/${encodedUid}/isOnline`).onDisconnect().set(false);
 }
 
 module.exports = {

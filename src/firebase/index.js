@@ -2,18 +2,21 @@ const firebase = require('firebase');
 const config = require('config');
 const log = require('../helpers/log');
 
+const CronTask = require('../cron/CronTask');
 const auth = require('./auth');
-const { reportAlive } = require('./server');
+const server = require('./server');
 
 const firebaseConfig = config.get('firebase');
 
-async function initialize() {
+function initialize() {
   firebase.initializeApp(firebaseConfig);
-  return auth.init();
+  return auth();
 }
 
 function bgReportAlive(serverUid) {
-  reportAlive(serverUid);
+  const cron = new CronTask('Report Alive', '0,30 * * * * *', () => server.reportAlive(serverUid));
+  cron.executeOnce();
+  cron.start();
 }
 
 function bgProcessQueue() {

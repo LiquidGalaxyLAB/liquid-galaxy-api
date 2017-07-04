@@ -13,6 +13,8 @@ const shortid = require('shortid');
 const generatePassword = require('generate-password');
 const firebase = require('firebase');
 
+const { encodeUid } = require('./utils');
+
 const readFile = Promise.promisify(fs.readFile);
 const writeFile = Promise.promisify(fs.writeFile);
 const createDir = Promise.promisify(mkdirp);
@@ -30,7 +32,6 @@ async function readCredentials() {
 }
 
 async function generateCredentials() {
-  // Uid is part of the firebase email name. Use email acceptable characters only.
   const uid = shortid.generate();
   const editKey = generatePassword.generate({
     length: 20,
@@ -46,36 +47,30 @@ async function saveCredentials(values) {
   return writeFile(CREDENTIALS_PATH, contents);
 }
 
-function encodeFirebaseEmail(uid) {
-  const encodedUid = uid.split('').reduce((prev, curr) => {
-    const encodedCurr = curr.charCodeAt(0);
-    return `${prev}${encodedCurr}`;
-  });
+function encodeEmail(uid) {
+  const encodedUid = encodeUid(uid);
   return `${encodedUid}@firebase.com`;
 }
 
-async function signup([uid, editKey]) {
-  const emailVal = encodeFirebaseEmail(uid);
+function signup([uid, editKey]) {
+  const emailVal = encodeEmail(uid);
   const passwordVal = editKey;
   return firebase.auth().createUserWithEmailAndPassword(emailVal, passwordVal);
 }
 
-async function signin([uid, editKey]) {
-  const emailVal = encodeFirebaseEmail(uid);
+function signin([uid, editKey]) {
+  const emailVal = encodeEmail(uid);
   const passwordVal = editKey;
   return firebase.auth().signInWithEmailAndPassword(emailVal, passwordVal);
 }
 
-module.exports = {
-  _encodeFirebaseEmail: encodeFirebaseEmail,
-  init: async () => {
-    let credentials = await readCredentials();
-    if (!credentials) {
-      credentials = await generateCredentials();
-      await saveCredentials(credentials);
-      await signup(credentials);
-    }
-    await signin(credentials);
-    return credentials;
-  },
+module.exports = async () => {
+  let credentials = await readCredentials();
+  if (!credentials) {
+    credentials = await generateCredentials();
+    await saveCredentials(credentials);
+    await signup(credentials);
+  }
+  await signin(credentials);
+  return credentials;
 };

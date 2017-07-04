@@ -9,7 +9,16 @@ class CronTask {
       await action();
       log.dev(`[CRON] Finished "${name}"`);
     };
+    this.action = newAction;
     this.cronJob = new CronJob(cronTime, newAction);
+  }
+
+  executeOnce() {
+    return this.action();
+  }
+
+  start() {
+    this.cronJob.start();
   }
 }
 
