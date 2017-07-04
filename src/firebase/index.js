@@ -1,10 +1,13 @@
 const firebase = require('firebase');
 const config = require('config');
 
+const auth = require('./auth');
+
 const firebaseConfig = config.get('firebase');
 
-function initialize() {
+async function initialize() {
   firebase.initializeApp(firebaseConfig);
+  await auth();
 }
 
 module.exports = {
