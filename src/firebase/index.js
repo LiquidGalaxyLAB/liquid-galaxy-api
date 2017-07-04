@@ -19,7 +19,7 @@ function bgReportAlive(serverUid) {
   cron.start();
 }
 
-function bgProcessQueue() {
+function bgListenQueue() {
 
 }
 
@@ -28,7 +28,7 @@ async function start() {
   log.info(`[Firebase] Signed in as ${uid} (${password ? `password ${password}` : 'no password'})`);
 
   bgReportAlive(uid);
-  bgProcessQueue();
+  bgListenQueue();
 }
 
 module.exports = { start };
