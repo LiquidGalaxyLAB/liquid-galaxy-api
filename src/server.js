@@ -10,7 +10,6 @@ const cors = require('cors');
 const log = require('./helpers/log');
 const routes = require('./routes');
 const firebase = require('./firebase');
-const cron = require('./cron');
 const socketConnectionHandler = require('./sockets');
 
 const PORT = config.get('port');
@@ -21,7 +20,7 @@ const server = http.createServer(app);
 // Hey you! care about my order http://stackoverflow.com/a/16781554/2034015
 
 // Firebase stuff.
-firebase.initialize();
+firebase.start();
 
 // Cookies.
 app.use(cookieParser());

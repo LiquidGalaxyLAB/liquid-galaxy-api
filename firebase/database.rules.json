@@ -2,7 +2,7 @@
   "rules": {
     "servers": {
       "$uid": {
-        ".write": "$uid === auth.token.email.beginsWith($uid + '@')",
+        ".write": "auth.token.email.beginsWith($uid + '@')",
         ".read": true,
         "displayName": {
           ".validate": "newData.val().length < 200"
@@ -18,12 +18,15 @@
         },
         "hasPassword": {
           ".validate": "newData.isBoolean()"
+        },
+        "$other": {
+          ".validate": false
         }
       }
     },
     "passwords": {
       "$serverUid": {
-        ".write": "$serverUid === auth.token.email.beginsWith($serverUid + '@') || newData.val() === data.val()",
+        ".write": "auth.token.email.beginsWith($serverUid + '@') || newData.val() === data.val()",
         ".read": false,
         ".validate": "newData.isString()"
       }
@@ -40,6 +43,9 @@
         },
         "timestamp": {
           ".validate": "newData.val() === now"
+        },
+        "$other": {
+          ".validate": false
         }
       }
     },

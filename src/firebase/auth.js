@@ -30,6 +30,7 @@ async function readCredentials() {
 }
 
 async function generateCredentials() {
+  // Uid is part of the firebase email name. Use email acceptable characters only.
   const uid = shortid.generate();
   const editKey = generatePassword.generate({
     length: 20,
@@ -45,28 +46,36 @@ async function saveCredentials(values) {
   return writeFile(CREDENTIALS_PATH, contents);
 }
 
-function firebaseEmail(uid) {
-  return `${uid}@firebase.com`;
+function encodeFirebaseEmail(uid) {
+  const encodedUid = uid.split('').reduce((prev, curr) => {
+    const encodedCurr = curr.charCodeAt(0);
+    return `${prev}${encodedCurr}`;
+  });
+  return `${encodedUid}@firebase.com`;
 }
 
 async function signup([uid, editKey]) {
-  const emailVal = firebaseEmail(uid);
+  const emailVal = encodeFirebaseEmail(uid);
   const passwordVal = editKey;
   return firebase.auth().createUserWithEmailAndPassword(emailVal, passwordVal);
 }
 
 async function signin([uid, editKey]) {
-  const emailVal = firebaseEmail(uid);
+  const emailVal = encodeFirebaseEmail(uid);
   const passwordVal = editKey;
   return firebase.auth().signInWithEmailAndPassword(emailVal, passwordVal);
 }
 
-module.exports = async () => {
-  let credentials = await readCredentials();
-  if (!credentials) {
-    credentials = await generateCredentials();
-    await saveCredentials(credentials);
-    await signup(credentials);
-  }
-  return signin(credentials);
+module.exports = {
+  _encodeFirebaseEmail: encodeFirebaseEmail,
+  init: async () => {
+    let credentials = await readCredentials();
+    if (!credentials) {
+      credentials = await generateCredentials();
+      await saveCredentials(credentials);
+      await signup(credentials);
+    }
+    await signin(credentials);
+    return credentials;
+  },
 };
