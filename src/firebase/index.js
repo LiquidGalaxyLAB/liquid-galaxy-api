@@ -5,6 +5,7 @@ const log = require('../helpers/log');
 const CronTask = require('../cron/CronTask');
 const auth = require('./auth');
 const server = require('./server');
+const queue = require('./queue');
 
 const firebaseConfig = config.get('firebase');
 
@@ -19,8 +20,8 @@ function bgReportAlive(serverUid) {
   cron.start();
 }
 
-function bgListenQueue() {
-
+function bgListenQueue(serverUid) {
+  queue.listenQueue(serverUid);
 }
 
 async function start() {
@@ -28,7 +29,7 @@ async function start() {
   log.info(`[Firebase] Signed in as ${uid} (${password ? `password ${password}` : 'no password'})`);
 
   bgReportAlive(uid);
-  bgListenQueue();
+  bgListenQueue(uid);
 }
 
 module.exports = { start };

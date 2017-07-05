@@ -35,17 +35,19 @@
       "$serverUidWithKey": {
         ".write": true,
         ".read": true,
-        "type": {
-          ".validate": "newData.isString()"
-        },
-        "value": {
-          ".validate": "newData.isString()"
-        },
-        "timestamp": {
-          ".validate": "newData.val() === now"
-        },
-        "$other": {
-          ".validate": false
+        "$queueUid": {
+          "type": {
+            ".validate": "newData.isString()"
+          },
+          "value": {
+            ".validate": "newData.isString()"
+          },
+          "timestamp": {
+            ".validate": "newData.val() === now"
+          },
+          "$other": {
+            ".validate": false
+          }
         }
       }
     },
