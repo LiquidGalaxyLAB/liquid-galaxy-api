@@ -13,9 +13,6 @@
         "isOnline": {
           ".validate": "newData.isBoolean()"
         },
-        "ip": {
-          ".validate": "newData.val().matches(/^[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}$/)",
-        },
         "hasPassword": {
           ".validate": "newData.isBoolean()"
         },
@@ -46,6 +43,27 @@
             ".validate": "newData.val() === now"
           },
           "$other": {
+            ".validate": false
+          }
+        }
+      }
+    },
+    "ips": {
+      "$ip": {
+        ".read": true,
+        ".validate": "$ip.matches(/^[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}$/)",
+        "$serverUid": {
+          ".write": "auth.token.email.beginsWith($serverUid + '@') || newData.val() === data.val()",
+          "displayName": {
+            ".validate": "newData.val().length < 200"
+          },
+          "lastOnline": {
+            ".validate": "newData.val() === now"
+          },
+          "isOnline": {
+            ".validate": "newData.isBoolean()"
+          },
+          "$other":{
             ".validate": false
           }
         }
