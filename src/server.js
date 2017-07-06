@@ -5,12 +5,10 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const Socketio = require('socket.io');
 const config = require('config');
-const cors = require('cors');
 
 const log = require('./helpers/log');
 const routes = require('./routes');
 const firebase = require('./firebase');
-const cron = require('./cron');
 const socketConnectionHandler = require('./sockets');
 
 const PORT = config.get('port');
@@ -20,13 +18,8 @@ const server = http.createServer(app);
 
 // Hey you! care about my order http://stackoverflow.com/a/16781554/2034015
 
-// Databases.
-firebase.initialize();
-
-// Cron jobs.
-if (config.get('cronJobsEnabled')) {
-  cron.startAll();
-}
+// Firebase stuff.
+firebase.start();
 
 // Cookies.
 app.use(cookieParser());
@@ -39,12 +32,10 @@ app.use(bodyParser.json());
 app.use(morgan('combined', { stream: { write: msg => log.info(msg) } }));
 
 // URLs.
-app.use(cors());
 app.use('/', routes);
 
 // Socket.io
 const io = Socketio(server);
-io.set('origins', '*:*');
 io.on('connection', socketConnectionHandler);
 
 server.listen(PORT);
