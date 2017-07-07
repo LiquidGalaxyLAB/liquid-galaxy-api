@@ -52,6 +52,7 @@
       "$ip": {
         ".read": true,
         ".validate": "$ip.matches(/^[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}$/)",
+        ".indexOn": ["lastOnline"],
         "$serverUid": {
           ".write": "auth.token.email.beginsWith($serverUid + '@') || newData.val() === data.val()",
           "displayName": {
