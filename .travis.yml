@@ -24,4 +24,9 @@ script:
 
 after_success:
   - cat ./coverage/lcov.info | coveralls
-  - firebase deploy --token $FIREBASE_TOKEN
+
+deploy:
+  provider: firebase
+  token:
+    secure: "uxXwLg8IJlz3IgKTA1yDIR983YDx1tD/7rFfxnC734e6K04AB94IpyMJ2t11lAp01hyE+JyD4OX8wjhqW/X9NVos6dSop0MOCtmrLMdMy3aAM2Q3b0DSTLLJDJjJPfB0oscK25k/Gkfx0q+i6WQc52AObFijnfrTjiekJM03TMXFJKwJE6/++Z68N48u6WOKJ2hvzgBZKnWoIS7p37QliyG407Fhab2zBnYD4zq4y93rdgDdY2Qg+yVCvCe9vHp15zFhXfYqWc1pdaRCxq6skrnro/h54MLfBv8x/Th3ddTCi55KIgKQUga5MBEEk3FjVM+dsIAfBaXfHGjfPth0BYEjVtfTsD5lTDA6cMAanVIljlom9dkqhmiSppl/5cjRTPiTB1+5UeXgoh6hv1eiP6RhriFgiW4HckQjjEoJ2tm4iFsQZbKVatXOHl+0GfrqvOWAXF6/MpHmzU9lzQBsLhyAVwNmc8vKON5ftsGZsAi8Qrz9/gIXF3ZWkLE9fNp1j27YwDHd4EbDo1uKgwrqQk9jaKqWa903hSjkwatEdH9Tzbr7Zog52r19+zI5RRDvtQo6RTyqULmYAmMvplZEaWqQ8QS1bzSE2oaCFk2pihx8TFMek0PHaiGv7yOU2oAASfOERLNffi74tGGTrpZiXOsA+deLIdQ9V2XpgBNQiYw="
+  skip_cleanup: true
