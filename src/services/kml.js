@@ -7,6 +7,7 @@ Promise.promisifyAll(fs);
 
 const kmlPath = config.get('kmlPath');
 const tmpKmlPath = config.get('tmpKmlPath');
+const tmpKmlUrl = config.get('tmpKmlUrl');
 const queriesPath = config.get('queriesPath');
 
 /**
@@ -15,7 +16,7 @@ const queriesPath = config.get('queriesPath');
  */
 async function saveKmlOnDisk(contents) {
   await fs.writeFile(tmpKmlPath, contents);
-  return fs.writeFile(kmlPath, `file://${tmpKmlPath}?${uuid()}`);
+  return fs.writeFile(kmlPath, `${tmpKmlUrl}?${uuid()}`);
 }
 
 /**

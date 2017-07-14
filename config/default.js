@@ -11,6 +11,11 @@ module.exports = {
   // remote path.
   tmpKmlPath: '/var/www/html/earth.kml',
 
+  // URL that will be used to locate the earth.kml.
+  // Make sure NOT to use file:///<tmpKmlPath>, unless you are debugging the config. All Liquid
+  // Galaxy machines MUST be able to read the file from the provided URL.
+  tmpKmlUrl: 'http://lg1:81/earth.kml',
+
   // File that handles Liquid Galaxy commands (such as flyto).
   queriesPath: '/tmp/query.txt',
 

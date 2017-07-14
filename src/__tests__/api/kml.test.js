@@ -5,6 +5,7 @@ const fs = require('fs');
 
 const kmlPath = config.get('kmlPath');
 const tmpKmlPath = config.get('tmpKmlPath');
+const tmpKmlUrl = config.get('tmpKmlUrl');
 const queriesPath = config.get('queriesPath');
 
 describe('KML', () => {
@@ -34,7 +35,7 @@ describe('KML', () => {
       expect(stubWriteFile[0].filename).to.equal(tmpKmlPath);
       expect(stubWriteFile[0].contents).to.equal(CONTENTS);
       expect(stubWriteFile[1].filename).to.equal(kmlPath);
-      expect(stubWriteFile[1].contents.startsWith(`file://${tmpKmlPath}?`)).to.equal(true);
+      expect(stubWriteFile[1].contents.startsWith(`${tmpKmlUrl}?`)).to.equal(true);
     });
 
     it('should save the uri when uri is given', async () => {
