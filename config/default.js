@@ -1,13 +1,4 @@
 module.exports = {
-  // Application port.
-  port: 3030,
-
-  // That's not the application port! If you are running the API behind a proxy (like liquid-galaxy
-  // by default is), make sure to set this port to the proxy's one.
-  // This port, along with the local IP, is the one that client's will connect to the API through.
-  proxy: true,
-  proxyPort: 82,
-
   // Network interface. Optional but highly recommended: Liquid Galaxy setup might confuse your
   // network device with the one it uses for its internal network.
   networkInterface: 'eth0', // Leave blank to autodetect.
@@ -18,7 +9,7 @@ module.exports = {
 
   // Path that will be used to store the KML when choosing to store it instead of specifying a
   // remote path.
-  tmpKmlPath: '/tmp/earth.kml',
+  tmpKmlPath: '/var/www/html/earth.kml',
 
   // File that handles Liquid Galaxy commands (such as flyto).
   queriesPath: '/tmp/query.txt',

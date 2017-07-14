@@ -4,14 +4,13 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const Socketio = require('socket.io');
-const config = require('config');
 
 const log = require('./helpers/log');
 const routes = require('./routes');
 const firebase = require('./firebase');
 const socketConnectionHandler = require('./sockets');
 
-const PORT = config.get('port');
+const PORT = 3030;
 
 const app = express();
 const server = http.createServer(app);

@@ -1,11 +1,10 @@
-const config = require('config');
 const fetch = require('node-fetch');
 const fetchAbsolute = require('fetch-absolute');
 const socketioClient = require('socket.io-client');
 
 require('../server');
 
-const PORT = config.get('port');
+const PORT = 3030;
 
 const socketioOptions = {
   transports: ['websocket'],
