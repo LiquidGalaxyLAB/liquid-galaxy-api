@@ -49,7 +49,7 @@ sudo apt-get install -qq nodejs
 sudo npm install pm2 -g
 
 if [ -d "$TARGET_DIR" ]; then
-	sudo pm2 delete api
+	pm2 delete api
 else
 	git clone $SOURCE_CODE $TARGET_DIR # New installation -> clone source code repository.
 fi
@@ -57,9 +57,9 @@ fi
   cd "$TARGET_DIR"
 	git pull
   npm install
-  sudo pm2 --name api start npm -- start
-	sudo pm2 save
+  pm2 --name api start npm -- start
+	pm2 save
 )
-sudo pm2 startup
+sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u lg --hp /home/lg
 
 echo "You're all set!"
