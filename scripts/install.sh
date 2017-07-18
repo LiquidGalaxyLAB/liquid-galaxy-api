@@ -5,6 +5,11 @@
 TARGET_DIR="$HOME/api"
 SOURCE_CODE="https://github.com/LiquidGalaxyLab/liquid-galaxy-api"
 
+if [ "$EUID" -eq 0 ]
+  then echo "Do not run as root!"
+  exit
+fi
+
 apache2=$(which apache2)
 if [ "$apache2" = "" ]; then
   echo "Apache2 installation was not found. Make sure you are running this script on the Liquid Galaxy master."
@@ -60,6 +65,6 @@ fi
   pm2 --name api start npm -- start
 	pm2 save
 )
-sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u lg --hp /home/lg
+sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u "$(whoami)" --hp "/home/$(whoami)"
 
 echo "You're all set!"
