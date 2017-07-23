@@ -19,6 +19,7 @@ const shortid = require('shortid');
 const generatePassword = require('generate-password');
 const firebase = require('firebase');
 
+const log = require('../helpers/log');
 const { encodeUid } = require('./utils');
 
 const readFile = Promise.promisify(fs.readFile);
@@ -37,6 +38,7 @@ async function readCredentials() {
     const { uid, editKey, password, displayName } = JSON.parse(contents);
     return { uid, editKey, password, displayName };
   } catch (error) {
+    log.info(`${CREDENTIALS_PATH} does not exist (or it is invalid).`);
     return null;
   }
 }
