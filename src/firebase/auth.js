@@ -18,6 +18,7 @@ const mkdirp = require('mkdirp');
 const shortid = require('shortid');
 const generatePassword = require('generate-password');
 const firebase = require('firebase');
+const Haikunator = require('haikunator');
 
 const log = require('../helpers/log');
 const { encodeUid } = require('./utils');
@@ -53,6 +54,16 @@ async function saveCredentials(values) {
   return writeFile(CREDENTIALS_PATH, contents);
 }
 
+function generateDisplayName() {
+  const haikunator = new Haikunator({
+    defaults: {
+      tokenLength: 0,
+      delimiter: ' ',
+    },
+  });
+  return haikunator.haikunate();
+}
+
 async function generateCredentials() {
   const uid = shortid.generate();
   const editKey = generatePassword.generate({
@@ -60,7 +71,8 @@ async function generateCredentials() {
     numbers: true,
   });
   const password = '';
-  return { uid, editKey, password };
+  const displayName = generateDisplayName();
+  return { uid, editKey, password, displayName };
 }
 
 function encodeEmail(uid) {

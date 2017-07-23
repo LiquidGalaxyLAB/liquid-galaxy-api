@@ -9,9 +9,15 @@ const queue = require('./queue');
 
 const firebaseConfig = config.get('firebase');
 
-function initialize() {
+async function initialize() {
   firebase.initializeApp(firebaseConfig);
-  return auth();
+  const authValues = await auth();
+  await server.reportGeneralInfo({
+    uid: authValues.uid,
+    hasPassword: !!authValues.password,
+    displayName: authValues.displayName,
+  });
+  return authValues;
 }
 
 function bgReportAlive(serverUid) {

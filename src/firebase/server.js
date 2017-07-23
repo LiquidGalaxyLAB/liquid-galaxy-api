@@ -5,6 +5,14 @@ const { encodeUid } = require('./utils');
 
 const SERVER_TIME = firebase.database.ServerValue.TIMESTAMP;
 
+async function reportGeneralInfo({ uid, hasPassword, displayName }) {
+  const encodedUid = encodeUid(uid);
+  const serverRef = firebase.database().ref(`/servers/${encodedUid}`);
+
+  await serverRef.child('hasPassword').set(hasPassword || false);
+  await serverRef.child('displayName').set(displayName || '');
+}
+
 async function reportAlive(uid) {
   const encodedUid = encodeUid(uid);
   const encodedPublicIp = (await publicIp.v4()).replace(/\./g, ':');
@@ -21,5 +29,6 @@ async function reportAlive(uid) {
 }
 
 module.exports = {
+  reportGeneralInfo,
   reportAlive,
 };
