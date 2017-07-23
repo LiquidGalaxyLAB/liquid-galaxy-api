@@ -64,6 +64,9 @@
           "isOnline": {
             ".validate": "newData.isBoolean()"
           },
+          "hasPassword": {
+            ".validate": "newData.isBoolean()"
+          },
           "$other":{
             ".validate": false
           }
