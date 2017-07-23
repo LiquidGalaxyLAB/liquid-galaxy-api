@@ -2,7 +2,13 @@
  * Authenticate server.
  * Signs up new server with random credentials (stored in data/credentials.txt)
  * Sign in with the stored credentials.
- * (format deviceUid:editKey:devicePassword)
+ * File format (.json)
+ * {
+ *   uid: device UID.
+ *   editKey: firebase edit key.
+ *   password (optional): password to send / receive information from the API.
+ *   displayName: friendly name (doesn't have to be unique).
+ * }
  */
 
 const Promise = require('bluebird');
@@ -21,14 +27,28 @@ const createDir = Promise.promisify(mkdirp);
 
 const CREDENTIALS_PATH = path.join('data/credentials.txt');
 
+/**
+ * Reads credentials from file.
+ * See the file format above.
+ */
 async function readCredentials() {
   try {
     const contents = await readFile(CREDENTIALS_PATH, { encoding: 'utf-8' });
-    const [uid, editKey, password] = contents.split(':');
-    return [uid, editKey, password];
+    const { uid, editKey, password, displayName } = JSON.parse(contents);
+    return { uid, editKey, password, displayName };
   } catch (error) {
     return null;
   }
+}
+
+/**
+ * Saves credentials to file.
+ * See the file format above.
+ */
+async function saveCredentials(values) {
+  const contents = JSON.stringify(values);
+  await createDir(path.join(CREDENTIALS_PATH, '..'));
+  return writeFile(CREDENTIALS_PATH, contents);
 }
 
 async function generateCredentials() {
@@ -38,13 +58,7 @@ async function generateCredentials() {
     numbers: true,
   });
   const password = '';
-  return [uid, editKey, password];
-}
-
-async function saveCredentials(values) {
-  const contents = values.join(':');
-  await createDir(path.join(CREDENTIALS_PATH, '..'));
-  return writeFile(CREDENTIALS_PATH, contents);
+  return { uid, editKey, password };
 }
 
 function encodeEmail(uid) {
@@ -52,13 +66,13 @@ function encodeEmail(uid) {
   return `${encodedUid}@firebase.com`;
 }
 
-function signup([uid, editKey]) {
+function signup({ uid, editKey }) {
   const emailVal = encodeEmail(uid);
   const passwordVal = editKey;
   return firebase.auth().createUserWithEmailAndPassword(emailVal, passwordVal);
 }
 
-function signin([uid, editKey]) {
+function signin({ uid, editKey }) {
   const emailVal = encodeEmail(uid);
   const passwordVal = editKey;
   return firebase.auth().signInWithEmailAndPassword(emailVal, passwordVal);

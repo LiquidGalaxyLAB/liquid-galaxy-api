@@ -25,7 +25,7 @@ function bgListenQueue(serverUid) {
 }
 
 async function start() {
-  const [uid, , password] = await initialize();
+  const { uid, password } = await initialize();
   log.info(`[Firebase] Signed in as ${uid} (${password ? `password ${password}` : 'no password'})`);
 
   bgReportAlive(uid);
