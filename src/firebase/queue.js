@@ -29,7 +29,7 @@ function controllerHandler(route, value) {
   try {
     routeAction();
   } catch (error) {
-    log.error('[Firebase] Failed to execute queue action:');
+    log.error('[Firebase] Failed to execute queue action (might be a sender error):');
     log.error(`Type ${route}`);
     log.error(`Value: ${value}`);
     log.error(error);
@@ -41,6 +41,7 @@ function listenQueue(uid) {
   const dbRef = firebase.database().ref(`queue/${encodedUid}`);
   dbRef.orderByChild('timestamp').on('child_added', (snapshot) => {
     const snapshotVal = snapshot.val();
+    log.dev(`[Firebase] Queue received ${JSON.stringify(snapshotVal)}`);
     controllerHandler(snapshotVal.type, snapshotVal.value);
     snapshot.ref.remove();
   });
