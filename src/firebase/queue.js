@@ -24,8 +24,16 @@ function controllerHandler(route, value) {
     log.dev(`[Firebase] Unrecognised queue type: ${route}`);
     return;
   }
+
   log.dev(`[Firebase] Executing queue type: ${route}`);
-  routeAction();
+  try {
+    routeAction();
+  } catch (error) {
+    log.error('[Firebase] Failed to execute queue action:');
+    log.error(`Type ${route}`);
+    log.error(`Value: ${value}`);
+    log.error(error);
+  }
 }
 
 function listenQueue(uid) {
