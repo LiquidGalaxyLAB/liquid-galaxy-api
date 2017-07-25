@@ -1,7 +1,6 @@
 const firebase = require('firebase');
-const publicIp = require('public-ip');
 
-const { encodeUid } = require('./utils');
+const { encodeUid, encodedPublicIp } = require('./utils');
 
 const SERVER_TIME = firebase.database.ServerValue.TIMESTAMP;
 
@@ -12,9 +11,8 @@ function serverRef(uid) {
 
 async function ipRef(uid) {
   const encodedUid = encodeUid(uid);
-  const currentPublicIp = await publicIp.v4();
-  const encodedPublicIp = currentPublicIp.replace(/\./g, ':');
-  return firebase.database().ref(`/ips/${encodedPublicIp}/${encodedUid}`);
+  const ip = await encodedPublicIp();
+  return firebase.database().ref(`/ips/${ip}/${encodedUid}`);
 }
 
 async function reportGeneralInfo({ uid, hasPassword = false, displayName = '' }) {
