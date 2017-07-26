@@ -2,11 +2,11 @@ const { ServerError } = require('../helpers/server');
 const {
   saveKmlOnDisk,
   saveKmlUriOnDisk,
+  cleanKml: cleanKmlService,
   saveQueryOnDisk,
 } = require('../services').kml;
 
-function createKml(values) {
-  const { contents, uri } = values;
+function createKml({ contents, uri }) {
   if (Number(!!contents) + Number(!!uri) !== 1) {
     throw new ServerError('Either Contents or Uri must be defined.', 400);
   }
@@ -14,12 +14,16 @@ function createKml(values) {
   return contents ? saveKmlOnDisk(contents) : saveKmlUriOnDisk(uri);
 }
 
-function createQuery(values) {
-  const contents = values.contents || '';
+function cleanKml() {
+  return cleanKmlService('');
+}
+
+function createQuery({ contents = '' }) {
   return saveQueryOnDisk(contents);
 }
 
 module.exports = {
   createKml,
+  cleanKml,
   createQuery,
 };

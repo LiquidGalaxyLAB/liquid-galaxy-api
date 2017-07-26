@@ -6,17 +6,14 @@ const controllers = require('../controllers');
 
 const { kml } = controllers;
 
-const SERVER_TIME = firebase.database.ServerValue.TIMESTAMP;
-
-const KML_VALUE = 'kml:value';
-const KML_HREF = 'kml:href';
-const QUERIES = 'queries';
-
+/* eslint-disable quote-props */
 const routes = value => ({
-  [KML_VALUE]: () => kml.createKml({ contents: value }),
-  [KML_HREF]: () => kml.createKml({ uri: value }),
-  [QUERIES]: () => kml.createQuery({ contents: value }),
+  'kml:value': () => kml.createKml({ contents: value }),
+  'kml:href': () => kml.createKml({ uri: value }),
+  'kml:clean': () => kml.cleanKml(),
+  'queries': () => kml.createQuery({ contents: value }),
 });
+/* eslint-enable quote-props */
 
 function controllerHandler(route, value) {
   const routeAction = routes(value)[route];
@@ -47,17 +44,6 @@ function listenQueue(uid) {
   });
 }
 
-function demoKml(uid) {
-  const encodedUid = encodeUid(uid);
-  const dbRef = firebase.database().ref(`queue/${encodedUid}`);
-  dbRef.push({
-    type: KML_VALUE,
-    value: '123',
-    timestamp: SERVER_TIME,
-  });
-}
-
 module.exports = {
   listenQueue,
-  demoKml,
 };

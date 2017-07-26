@@ -20,6 +20,7 @@ module.exports = {
   queriesPath: '/tmp/query.txt',
 
   // Firebase repository where all alive reports will be sent.
+  // KMLs and other commands can also be sent through it.
   firebase: {
     apiKey: 'AIzaSyAddzwazFGRJiC-GW35Zgr7XdhUk8x0890',
     authDomain: 'liquid-galaxy-api.firebaseapp.com',

@@ -37,6 +37,7 @@ router.get('/', c(hello.hello));
  * KMLs.
  */
 router.post('/kmls', c(kml.createKml, req => [req.body]));
+router.post('/kmls/clean', c(kml.cleanKml));
 router.post('/queries', c(kml.createQuery, req => [req.body]));
 
 /**

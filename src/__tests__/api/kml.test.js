@@ -56,6 +56,15 @@ describe('KML', () => {
 
       expect(result.status).to.equal(400);
     });
+
+    it('should clean kml', async () => {
+      const result = await fetchApi('/kmls/clean', { headers, method: 'POST' });
+
+      expect(result.status).to.equal(200);
+
+      expect(stubWriteFile[0].filename).to.equal(kmlPath);
+      expect(stubWriteFile[0].contents).to.equal('');
+    });
   });
 
   describe('POST /queries', () => {

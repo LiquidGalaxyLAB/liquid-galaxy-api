@@ -55,6 +55,7 @@ function connectionHandler(socket) {
    * KMLs.
    */
   socket.on('P:/kmls', c(kml.createKml, data => [data]));
+  socket.on('P:/kmls/clean', c(kml.cleanKml));
   socket.on('P:/queries', c(kml.createQuery, data => [data]));
 }
 

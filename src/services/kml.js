@@ -27,6 +27,13 @@ function saveKmlUriOnDisk(uri) {
   return fs.writeFile(kmlPath, `${uri}?${uuid()}`);
 }
 
+/**
+ * Empties kmls.txt.
+ */
+function cleanKml() {
+  return fs.writeFile(kmlPath, '');
+}
+
 function saveQueryOnDisk(contents) {
   return fs.writeFile(queriesPath, contents);
 }
@@ -34,5 +41,6 @@ function saveQueryOnDisk(contents) {
 module.exports = {
   saveKmlOnDisk,
   saveKmlUriOnDisk,
+  cleanKml,
   saveQueryOnDisk,
 };
