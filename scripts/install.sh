@@ -51,7 +51,7 @@ sudo iptables-save | sudo tee /etc/iptables.conf > /dev/null
 
 curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
 sudo apt-get install -qq nodejs
-sudo npm install pm2@4.5.6 -g
+sudo npm install pm2@4.0.1 -g
 
 if [ -d "$TARGET_DIR" ]; then
 	pm2 delete api
