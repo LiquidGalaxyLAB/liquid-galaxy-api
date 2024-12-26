@@ -13,7 +13,7 @@
 Install / upgrade **(on the master machine only)**:
 
 ```
-bash <(curl -s https://raw.githubusercontent.com/LiquidGalaxyLAB/liquid-galaxy-api/master/scripts/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/Rohit-554/liquid-galaxy-api/refs/heads/master/scripts/install.sh)
 ```
 
 The API will be available under port **82** (proxy served by Apache). http://localhost:82 
