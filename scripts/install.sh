@@ -47,20 +47,23 @@ sudo iptables-save | sudo tee /etc/iptables.conf > /dev/null
 curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
 sudo apt-get install -qq nodejs
 
-# Downgrade PM2 to specific version
-echo "Downgrading PM2 to version 3.5.1..."
-pm2 kill 2>/dev/null || true
+# Install specific PM2 version
+echo "Installing PM2 version 3.5.1..."
 sudo npm install pm2@3.5.1 -g
 
-# Verify PM2 installation
+# Verify PM2 version and enforce if needed
 PM2_VERSION=$(pm2 -v)
-echo "Installed PM2 version: $PM2_VERSION"
+if [ "$PM2_VERSION" != "3.5.1" ]; then
+    echo "Warning: PM2 version mismatch. Forcing version 3.5.1..."
+    sudo npm install -g pm2@3.5.1
+fi
 
 if [ -d "$TARGET_DIR" ]; then
   pm2 delete api 2>/dev/null || true
 else
   git clone $SOURCE_CODE $TARGET_DIR # New installation -> clone source code repository.
 fi
+
 (
   cd "$TARGET_DIR"
   git pull
