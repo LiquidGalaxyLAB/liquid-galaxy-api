@@ -47,16 +47,9 @@ sudo iptables-save | sudo tee /etc/iptables.conf > /dev/null
 curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
 sudo apt-get install -qq nodejs
 
-# Clean PM2 installation
-echo "Cleaning up existing PM2 installation..."
+# Downgrade PM2 to specific version
+echo "Downgrading PM2 to version 3.5.1..."
 pm2 kill 2>/dev/null || true
-sudo npm uninstall -g pm2 2>/dev/null || true
-rm -rf ~/.pm2 2>/dev/null || true
-rm -rf /usr/lib/node_modules/pm2 2>/dev/null || true
-npm cache clean --force
-
-# Install specific PM2 version
-echo "Installing PM2 version 3.5.1..."
 sudo npm install pm2@3.5.1 -g
 
 # Verify PM2 installation
@@ -64,17 +57,16 @@ PM2_VERSION=$(pm2 -v)
 echo "Installed PM2 version: $PM2_VERSION"
 
 if [ -d "$TARGET_DIR" ]; then
-    pm2 delete api 2>/dev/null || true
+  pm2 delete api 2>/dev/null || true
 else
-    git clone $SOURCE_CODE $TARGET_DIR # New installation -> clone source code repository.
+  git clone $SOURCE_CODE $TARGET_DIR # New installation -> clone source code repository.
 fi
-
 (
   cd "$TARGET_DIR"
-    git pull
-    npm install
-    pm2 --name api start npm -- start
-    pm2 save
+  git pull
+  npm install
+  pm2 --name api start npm -- start
+  pm2 save
 )
 
 sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u "$(whoami)" --hp "/home/$(whoami)"
