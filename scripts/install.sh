@@ -51,20 +51,19 @@ sudo iptables-save | sudo tee /etc/iptables.conf > /dev/null
 
 curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
 sudo apt-get install -qq nodejs
-sudo npm install pm2 -g
+sudo npm install pm2@3.5.1 -g 
 
 if [ -d "$TARGET_DIR" ]; then
-	pm2 delete api
+sudo pm2 delete api
 else
-	git clone $SOURCE_CODE $TARGET_DIR # New installation -> clone source code repository.
+git clone $SOURCE_CODE $TARGET_DIR # New installation -> clone source code repository.
 fi
 (
   cd "$TARGET_DIR"
-	git pull
+  git pull
   npm install
-  pm2 --name api start npm -- start
-	pm2 save
+  sudo pm2 --name api start npm -- start
+	sudo pm2 save
 )
 sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u "$(whoami)" --hp "/home/$(whoami)"
-
 echo "You're all set!"
